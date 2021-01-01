@@ -1,11 +1,13 @@
 use structopt::StructOpt;
-use std::str::FromStr;
 use strum_macros::EnumString;
 
 #[derive(Debug, PartialEq, EnumString)]
 enum BuildMode {
+    #[strum(serialize = "presentation", serialize = "p")]
     Presentation, 
+    #[strum(serialize = "paper", serialize = "lecture-notes", serialize="notes", serialize="ln", serialize="n")]
     LectureNotes,
+    #[strum(serialize = "both", serialize = "b")]
     Both
 }
 
