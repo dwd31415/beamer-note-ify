@@ -4,6 +4,7 @@ use strum_macros::EnumString;
 mod parser;
 mod compiler;
 mod data_structures;
+mod preprocessor;
 
 #[derive(Copy, Clone, Debug, PartialEq, EnumString)]
 pub enum BuildMode {
@@ -30,5 +31,5 @@ fn main() {
     let content = std::fs::read_to_string(&args.path)
         .expect("Error: Could not read file.");
     let blocks = parser::parse_input(content).expect("Quit because of a parsing error.");
-    compiler::compile(blocks, args.mode);
+    println!("{}",compiler::compile(blocks, args.mode).unwrap());
 }

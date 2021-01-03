@@ -56,6 +56,7 @@ pub fn parse_input(content:String) -> Option<Vec<data_structures::Block>>{
             }
         } else {
             current_block.content.push_str(full_line);
+            current_block.content.push('\n');
         }
         if line_without_whitespace=="%@bni" {
             println!("Warning: In line {} @bni is invoked without a follow-up command.", line_nr);
