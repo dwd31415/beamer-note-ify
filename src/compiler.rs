@@ -3,6 +3,7 @@ use super::preprocessor;
 use super::BuildMode;
 
 pub fn compile(blocks:Vec<data_structures::Block>, build_mode: BuildMode) -> Option<String> {
+    #[allow(non_snake_case)]
     let mut teX_code = "".to_string().to_owned();
     for block in blocks {
         if data_structures::check_block_type_compatility(build_mode, block.block_type) {

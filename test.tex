@@ -5,7 +5,20 @@ Test.
 % @bni end-block
 % @bni begin-block paper
 Inside a second block.
+\begin{frame}[test]
+Hello World.
+	\begin{frame}{Hi}
+		Rust’s control-flow analysis treats this construct differently than a while true, since we know that it will always loop. In general, the more information we can give to the compiler, the better it can do with safety and code generation, so you should always prefer loop when you plan to loop infinitely.
+	\end{frame}
+\end{frame}
+Rust’s control-flow analysis treats this construct differently than a while true, since we know that it will always loop. In general, the more information we can give to the compiler, the better it can do with safety and code generation, so you should always prefer loop when you plan to loop infinitely.
 % @bni end-block
+\begin{frame}\end{frame}
+	\begin{frame}\end{frame}
+\begin{frame}
+	Test 2.
+	Rust’s control-flow analysis treats this construct differently than a while true, since we know that it will always loop. In general, the more information we can give to the compiler, the better it can do with safety and code generation, so you should always prefer loop when you plan to loop infinitely.
+\end{frame}
 % @bni begin-block slides
 Inside a third block.
 % @bni end-block
