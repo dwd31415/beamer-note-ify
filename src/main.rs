@@ -2,6 +2,7 @@ use structopt::StructOpt;
 use strum_macros::EnumString;
 
 mod parser;
+mod data_structures;
 
 #[derive(Debug, PartialEq, EnumString)]
 enum BuildMode {

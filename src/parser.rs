@@ -1,4 +1,7 @@
 use std::primitive::str;
+use indextree::Arena;
+
+use super::data_structures; 
 
 fn remove_whitespace(s: &str) -> String {
     s.chars().filter(|c| !c.is_whitespace()).collect()
@@ -6,6 +9,10 @@ fn remove_whitespace(s: &str) -> String {
 
 pub fn parse_input(content:String) {
     let mut line_nr = 1;
+    let mut arena: Arena<&mut data_structures::Block> = Arena::new();
+    let mut main_content_string = "".to_string().to_owned();
+    let mut root_block = data_structures::Block{content :&mut main_content_string, block_type : data_structures::BlockType::Both};
+    let current_block = arena.new_node(&mut root_block);
     for full_line in content.lines() {
         // check if the line is a latex comment and start with @bni
         let line_without_whitespace = remove_whitespace(full_line);
@@ -20,11 +27,22 @@ pub fn parse_input(content:String) {
             let tokens : Vec<&str> = line_clean.split(' ').collect();
             //check that there are tokens to process
             if tokens.len() > 0 {
-                
+                match tokens[0] {
+                    "begin-block" => {
+                        
+                    }
+                    "end-block" => {
+                    }
+                    _ => {
+                        println!("Error: Invalid command following @bni in line {}", line_nr);
+                    }
+                }
             }
             else{
                 println!("Warning: In line {} @bni is invoked without a follow-up command.", line_nr);
             }
+        } else {
+            arena.get_mut(current_block).expect("Internal error.").get_mut().content.push_str(full_line);
         }
         if line_without_whitespace=="%@bni" {
             println!("Warning: In line {} @bni is invoked without a follow-up command.", line_nr);
