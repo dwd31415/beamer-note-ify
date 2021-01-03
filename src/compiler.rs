@@ -7,7 +7,7 @@ pub fn compile(blocks:Vec<data_structures::Block>, build_mode: BuildMode) -> Opt
     for block in blocks {
         if data_structures::check_block_type_compatility(build_mode, block.block_type) {
             let content = match build_mode {
-                BuildMode::LectureNotes => preprocessor::debeamerize(block.content),
+                BuildMode::LectureNotes => preprocessor::debeamerize(block.content).expect("Error in removing beamer specific LaTeX."),
                 BuildMode::Presentation => block.content,
                 BuildMode::Both => String::from("")
             };
