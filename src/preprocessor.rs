@@ -25,26 +25,42 @@ pub fn debeamerize(rawcode: String) -> Option<String> {
         //let mut exmp = String::from("[helloβ world[][][]] hi]{}{}fvreverv").to_owned();
         //let exmp_end = find_closure(&exmp,'[',']',0).unwrap();
         //exmp.replace_range((0..exmp_end),"");
-        for (starting_pos,_) in code.match_indices(&begin) {
-            if code.len() < starting_pos + 1 {
-                // @TODO: Better error message
-                println!("Fatal LaTeX error.");
-                return None;
-            }
-            marked_for_deletion.push(starting_pos..starting_pos+begin.len());
-            println!("{:?}",starting_pos..starting_pos+begin.len());
-            if &code.as_str()[starting_pos..starting_pos+1] == "[" {
+        let mut finished = false;
+        while !finished {
+            let starting_pos_maybe = code.find(&begin);
+            match starting_pos_maybe{
+                Some(starting_pos) => {
+                    if code.len() < starting_pos + 1 {
+                        // @TODO: Better error message
+                        println!("Fatal LaTeX error.");
+                        return None;
+                    }
+                    marked_for_deletion.push(starting_pos..starting_pos+begin.len());
+                    println!("{:?}",starting_pos..starting_pos+begin.len());
+                    if &code.as_str()[starting_pos..starting_pos+1] == "[" {
 
+                    }
+                    code.replace_range(starting_pos .. starting_pos + begin.len(), "");
+                },
+                None => {finished=true;}
             }
         }
-        for (starting_pos,_) in code.match_indices(&end){
-            marked_for_deletion.push(starting_pos..starting_pos+end.len());
+        // quickly remove the \end{...} tags
+        finished = false;
+        while !finished {
+            let starting_pos_maybe = code.find(&end);
+            match starting_pos_maybe{
+                Some(starting_pos) => {
+                    if code.len() < starting_pos + 1 {
+                        // @TODO: Better error message
+                        println!("Fatal LaTeX error.");
+                        return None;
+                    }
+                    code.replace_range(starting_pos .. starting_pos + end.len(), "");
+                },
+                None => {finished=true;}
+            }
         }
-    }
-    let mut offset: usize = 0;
-    for deletion_range in marked_for_deletion {
-        code.replace_range(deletion_range.start - offset .. deletion_range.end - offset, "");
-        offset += deletion_range.end - deletion_range.start;
     }
     return Some(code);
 }
