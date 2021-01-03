@@ -28,7 +28,8 @@ fn main() {
     let args = CliOpt::from_args(); 
     if args.mode == BuildMode::Presentation {
         let content = std::fs::read_to_string(&args.path)
-            .expect("could not read file");
-        parser::parse_input(content);
+            .expect("Error: Could not read file.");
+        let blocks = parser::parse_input(content).expect("Quit because of a parsing error.");
+        println!("{:?}", blocks);
     }
 }
