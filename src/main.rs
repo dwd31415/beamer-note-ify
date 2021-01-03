@@ -2,10 +2,11 @@ use structopt::StructOpt;
 use strum_macros::EnumString;
 
 mod parser;
+mod compiler;
 mod data_structures;
 
-#[derive(Debug, PartialEq, EnumString)]
-enum BuildMode {
+#[derive(Copy, Clone, Debug, PartialEq, EnumString)]
+pub enum BuildMode {
     #[strum(serialize = "presentation", serialize = "p")]
     Presentation, 
     #[strum(serialize = "paper", serialize = "lecture-notes", serialize="notes", serialize="ln", serialize="n")]
@@ -26,10 +27,8 @@ struct CliOpt {
 fn main() {
     // Load arguments from the command line
     let args = CliOpt::from_args(); 
-    if args.mode == BuildMode::Presentation {
-        let content = std::fs::read_to_string(&args.path)
-            .expect("Error: Could not read file.");
-        let blocks = parser::parse_input(content).expect("Quit because of a parsing error.");
-        println!("{:?}", blocks);
-    }
+    let content = std::fs::read_to_string(&args.path)
+        .expect("Error: Could not read file.");
+    let blocks = parser::parse_input(content).expect("Quit because of a parsing error.");
+    compiler::compile(blocks, args.mode);
 }

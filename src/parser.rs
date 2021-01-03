@@ -33,7 +33,6 @@ pub fn parse_input(content:String) -> Option<Vec<data_structures::Block>>{
                             inside_block = true;
                             // append the current block
                             blocks.push(current_block.clone());
-                            println!("{}",current_block.content.as_str());
                             // start a new block
                             current_block = data_structures::Block{content: "".to_string().to_owned(), block_type: block_type}; 
                         } else {
