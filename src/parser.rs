@@ -63,5 +63,6 @@ pub fn parse_input(content:String) -> Option<Vec<data_structures::Block>>{
         }
         line_nr = line_nr + 1;
     }
+    blocks.push(current_block);
     return Some(blocks);
 }
