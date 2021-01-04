@@ -67,11 +67,11 @@ pub fn debeamerize(rawcode: String) -> Option<String> {
         let mut finished = false;
         let mut last_starting_position = 0;
         while !finished {
-            let starting_pos_maybe = code.find(&pattern);
+            let starting_pos_maybe = code[last_starting_position..].find(&pattern);
             let mut deletions_counter = 0;
             match starting_pos_maybe{
                 Some(starting_pos_init) => {
-                    let mut starting_pos = starting_pos_init;
+                    let mut starting_pos = starting_pos_init + last_starting_position;
                     // are we already in an infinite loop? (If we don't do something about it.)
                     if starting_pos <= last_starting_position {
                         finished = true;
@@ -105,7 +105,7 @@ pub fn debeamerize(rawcode: String) -> Option<String> {
                             deletions_counter += 2;
                         }
                     }
-                    last_starting_position = starting_pos_init;
+                    last_starting_position = starting_pos;
                 },
                 None => {finished=true;}
             }
