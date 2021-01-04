@@ -38,7 +38,6 @@ fn build(build_mode : BuildMode, file_name: &std::path::PathBuf){
         .expect("Error: Could not read file.");
     let blocks = parser::parse_input(content).expect("Quit because of a parsing error.");
     let content_maybe = compiler::compile(blocks, build_mode);
-    println!("{:?}", content_maybe);
     match content_maybe {
         Some(content_final) => {
             let new_path = file_name.with_extension("").with_extension(format!("{}.tex", build_mode)); 
