@@ -61,7 +61,7 @@ pub fn debeamerize(rawcode: String) -> Option<String> {
             }
         }
     }
-    let remove_ctrl_commands = [("item",false,false), ("uncover",true,true)];
+    let remove_ctrl_commands = [("item",false,false), ("uncover",true,true),("only",true,true)];
     for (command, delete_command, delete_braces) in &remove_ctrl_commands {
         let pattern = format!("\\{}", command);
         let mut finished = false;
